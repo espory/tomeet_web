@@ -1,0 +1,11 @@
+.infomain {
+position: relative;
+overflow: hidden;
+background-color: #eee;
+}
+.infomainform{
+    margin-top: 180px;
+    margin-left: center;
+    width: 100%;
+    text-align:left;
+}

@@ -1,0 +1,26 @@
+#list li {
+		padding: 12px 15px;
+		border-bottom: 1px solid #292C33;
+		cursor: pointer;
+		list-style: none;
+		margin-left: -40px;
+		font-size: medium;
+		height: 78px;
+    }
+
+#list li:hover {
+		background-color: rgba(255, 255, 255, 0.03);
+	}
+#list li.active {/*注意这个是.不是冒号:*/
+		background-color: rgba(255, 255, 255, 0.1);
+}
+#list .avatar {
+	border-radius: 2px;
+	width: 35px;
+	vertical-align: middle;
+}
+#list .name {
+	display: inline-block;
+	margin-left: 15px;
+	margin-top: 16px;
+}

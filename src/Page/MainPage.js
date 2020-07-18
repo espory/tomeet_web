@@ -9,6 +9,8 @@ import TreeHole from './Components/MenuPage/TreeHole'
 import UserInfo from './Components/MenuPage/UserInfo'
 
 import './MainPage.css'
+import { getInfoApi} from "../service/api" // 引入接口
+import { withRouter } from 'react-router-dom';
 
 
 function ListPage(props) {
@@ -51,8 +53,10 @@ class MainPage extends React.Component {
 
         this.handleClick = this.handleClick.bind(this);
     }
-    componentDidMount(){
-        
+    componentWillMount(){
+        window._ROUTER_ = this.props.history;
+
+        getInfoApi();
     }
 
     handleClick(index) {
@@ -79,4 +83,4 @@ class MainPage extends React.Component {
 
 
 
-export default MainPage
+export default withRouter(MainPage)

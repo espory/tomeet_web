@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import logo from '../images/logo.png'
 import './LoginPage.css'
-import { loginApi, sendCodeApi,registApi,testApi, } from "../service/api" // 引入接口
+import { loginApi, sendCodeApi,registApi, } from "../service/api" // 引入接口
 import { withRouter } from 'react-router-dom';
 
 
 export class LoginPage extends Component {
-
-    
 
     constructor(props){
         super(props);
@@ -99,7 +97,7 @@ export class LoginPage extends Component {
 
     }
     testFunction(){
-        testApi();
+        
     }
     render() {
         return (

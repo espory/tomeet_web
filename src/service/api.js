@@ -2,16 +2,6 @@
 import request from "./request";
 import { message } from 'antd';
 
-
-export async function testApi(){
-    let res = await request.get("/api/user/demoinfo");
-    if(res.data.code===0){
-        message.success('登陆成功');
-    }
-    else{
-        message.error(res.data.message);
-    }
-}
 export async function loginApi(parameters){
     let res = await request.post("/api/user/login",parameters);
     if(res.data.code===0){
@@ -43,6 +33,16 @@ export async function registApi(parameters){
     if(res.data.code===0){
         message.success(res.data.message);
         window._ROUTER_.push('/main')
+    }
+    else{
+        message.error(res.data.message);
+    }
+}
+
+export async function getInfoApi(){
+    let res = await request.get("/api/user/info");
+    if(res.data.code===0){
+        message.success(res.data.message);
     }
     else{
         message.error(res.data.message);

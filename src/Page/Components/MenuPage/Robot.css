@@ -14,7 +14,7 @@
 
 
 #uesrtext {
-	position: absolute;
+  position: absolute;
   bottom: 0;
   right: 0;
   width: 100%;
@@ -33,11 +33,11 @@
 #message{
     margin-top: 10px;
     margin-left: 5px;
-	padding: 15px;
+    padding: 15px;
     max-height: 68%;
     overflow-y: scroll;
     overflow-x:hidden;
-    height: 475px;
+    height: 483PX;
     
 }
 #message ul {
@@ -73,7 +73,7 @@
 #message .main .text {
     display: inline-block;
     margin-top: 2px;
-        padding: 0 10px;
+    padding: 0 15px;
     max-width: 80%;
     font-size: 14px;
     font-family: 'STHeiti';
@@ -89,17 +89,18 @@
 }
 #message .self .avatar {
     float: right;
-    margin: 9px 0 0 10px;
+    margin: 0px 0 0 10px;
     border-radius: 3px;
     width: 40px;
     height: 40px;
   }
 #message .self .text {
     display: inline-block;
-    padding: 0 10px;
+    padding: 0 12px;
     max-width: 80%;
     background-color: #b2e281;
     border-radius: 4px;
     line-height: 30px;
     font-size: 14px;
+    margin-top: 6px;
   }

@@ -1,55 +1,80 @@
 
 import request from "./request";
-import { message } from 'antd';
+import { message, notification } from 'antd';
 
-export async function loginApi(parameters){
-    let res = await request.post("/api/user/login",parameters);
-    if(res.data.code===0){
-        message.success('登陆成功');
+export async function loginApi(parameters) {
+    let res = await request.post("/api/user/login", parameters);
+    if (res.data.code === 0) {
+        notification['success']({
+            message: '验证通过',
+            description: '登陆成功'
+        })
         window._ROUTER_.push('/main')
     }
-    else{
+    else {
         message.error(res.data.message);
     }
 }
 
 export async function sendCodeApi(phoneNum) {
     let reg = /^1[0-9]{10}$/;
-    if (phoneNum == '' || phoneNum.length <= 10 || !reg.test(phoneNum)){
+    if (phoneNum == '' || phoneNum.length <= 10 || !reg.test(phoneNum)) {
         message.error('请输入正确的手机号');
     }
-    else{
-        let res = await request.post("/api/user/sendcode",{"phoneNum":phoneNum});
-        if(res.data.code===0){
+    else {
+        let res = await request.post("/api/user/sendcode", { "phoneNum": phoneNum });
+        if (res.data.code === 0) {
             message.success(res.data.message);
         }
-        else{
+        else {
             message.error(res.data.message);
         }
     }
 }
-export async function registApi(parameters){
-    let res = await request.post("/api/user/register",parameters);
-    if(res.data.code===0){
-        message.success(res.data.message);
+export async function registApi(parameters) {
+    let res = await request.post("/api/user/register", parameters);
+    if (res.data.code === 0) {
+        console.log(res)
+        message.success(res.data.message.message);
         window._ROUTER_.push('/main')
     }
-    else{
+    else {
         message.error(res.data.message);
     }
 }
 
-export async function getInfoApi(){
-    let res = await request.get("/api/user/info");
-    if(res.data.code===0){
+export async function getInfoApi() {
+    let res = await request.get("/api/user/getInfo");
+    if (res.data.code === 0) {
+        return res.data.message
+    }
+    else {
+        message.error(res.data.message);
+    }
+}
+
+export async function updateInfoApi(parameters) {
+    let res = await request.post("/api/user/updateInfo",parameters);
+    if (res.data.code === 0) {
         message.success(res.data.message);
     }
-    else{
+    else {
         message.error(res.data.message);
     }
 }
 
+export async function sendRobotMsg(parameters) {
 
+    let res = await request.post('/api/robot',parameters);
+    console.log(res)
+    if (res.data.code === 0) {
+        return res.data.message
+    }
+    else {
+        message.error(res.data.message);
+    }
+
+}
 
 // /* jshint esversion: 6 */
 // import request from "./request";

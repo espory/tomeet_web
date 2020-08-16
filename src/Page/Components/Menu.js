@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+
 import './Menu.css'
 import img1 from '../../images/listUI/多云.png'
 import img2 from '../../images/listUI/music.png'
@@ -7,29 +9,27 @@ import img4 from '../../images/listUI/鸟.png'
 import img5 from '../../images/listUI/robot.png'
 import img6 from '../../images/listUI/set.png'
 
+
+
+
+
+
 function Card(props) {
+    let { currentPageId, info, changeCurrentPageId } = props
     return (
-
-        //react代码逻，通过条件运算符去创建元素来表现当前的状态，使得代码显得
-        (props.info.id === props.currentSessionId) ?
-            <li className="active">
-                <img className="avatar" src={props.info.app.img} alt={props.info.app.name}></img>
-                <p className="name">{props.info.app.name}</p>
-            </li> : <li onClick={props.handleClick}>
-                <img className="avatar" src={props.info.app.img} alt={props.info.app.name}></img>
-                <p className="name">{props.info.app.name}</p>
-            </li>
-
+        <li className={ (info.id === currentPageId) ? 'active' :''} onClick={changeCurrentPageId}>
+            <img className="avatar" src={info.app.img} alt={info.app.name}></img>
+            <p className="name">{info.app.name}</p>
+        </li>
     )
 }
 
 
 
-class Menu extends React.Component {
+class Menu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentSessionId: props.currentSessionId,
             ListInfo: [{
                 id: 1,
                 app: {
@@ -76,12 +76,14 @@ class Menu extends React.Component {
     }
 
     render() {
+        let { currentPageId, changeCurrentPageId } = this.props
+
         return (
             <div id="list">
                 <ul style={{ marginTop: "16px" }}>
                     {
                         this.state.ListInfo.map((info) => {
-                            return (<Card key={info.id} info={info} currentSessionId={this.props.currentSessionId} handleClick={() => { this.props.handleClick(info.id) }}></Card>)
+                            return (<Card key={info.id} info={info} currentPageId={currentPageId} changeCurrentPageId={() => { changeCurrentPageId(info.id) }}></Card>)
                         })}
                 </ul>
             </div>
@@ -90,5 +92,23 @@ class Menu extends React.Component {
     }
 }
 
-export default Menu
+
+
+const mapStateToProps = (state) => ({
+    currentPageId: state.currentPageId,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    changeCurrentPageId(PageId) {
+        let action = {
+            type: 'CHANGE_CURRENT_PAGE_ID',
+            PageId
+        }
+        dispatch(action);
+    },
+
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Menu)
+
 

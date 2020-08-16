@@ -30,7 +30,7 @@ service.interceptors.response.use(
     async function(response) {
     let {data, config} = response;
     if(data.code===0){
-        if(config.url === '/api/user/login'){
+        if(config.url === '/api/user/login'||config.url === '/api/user/register'){
             localStorage.setItem(TOKEN_KEY, data.message.token)
         }
     } else if(data.code===-5){

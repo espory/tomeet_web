@@ -6,8 +6,9 @@ function PersonalSpace(props) {
         backgroundImage: 'url(' + require('../../../images/space.png') + ')'             //非常值得注意的一点
     }
     return (
-        props.currentSessionId === 3 ?
-            <div className="main" style={style} /> : <div className="main" />
+        // props.currentSessionId === 3 ?
+        //     <div className="main" style={style} /> : <div className="main" />
+        <div className="main" style={style} />
     )
 }
 

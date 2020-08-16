@@ -1,21 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { message,Button } from 'antd';
-import oppositeIcon from '../../../images/robot.png'
-import selfIcon from '../../../images/3.png'
+import { message } from 'antd';
+import oppositeIcon from '../../../../images/2.png'
+import selfIcon from '../../../../images/3.png'
 
-import { sendRobotMsg } from '../../../service/api'
+import '../Robot.css'
 
-import './Robot.css'
 
 class Message extends Component {
-    constructor(props) {
-        super(props);
-    }
-    componentDidMount() {
-        message.destroy();
-    }
 
     scrollToBottom = () => {
         this.messagesEnd.scrollIntoView({ behavior: "smooth" });
@@ -28,7 +21,6 @@ class Message extends Component {
     componentDidUpdate() {
         this.scrollToBottom();
     }
-
 
     render() {
         return (
@@ -53,18 +45,16 @@ class Message extends Component {
                             })
                         }
                         <div style={{ float: "left", clear: "both" }}
-                            ref={(el) => { this.messagesEnd=el }}>
+                            ref={(el) => { this.messagesEnd = el }}>
                         </div>
-
                     </div>
                 </div>
+
             </div>
         )
     }
 }
 
-
-// onClick={(event)=>{this.event.target.value = "";}}
 
 class Text extends React.Component {
     constructor(props) {
@@ -73,7 +63,7 @@ class Text extends React.Component {
             value: '',
         }
         this.handleTextChange = this.handleTextChange.bind(this);
-        this.handleEnterKey = this.handleEnterKey.bind(this);
+        this.handleEnterKey = this.handleEnterKey.bind(this)
     }
 
     handleTextChange(event) {
@@ -88,38 +78,33 @@ class Text extends React.Component {
         let value = this.state.value;
         if (value === '')
             return;
+        if (value === "goodbye") {
+            window._SOCKET_.close();
+            message.warning('你选择了离开')
+            this.props.changeChatPageToMeet(0);
 
-        let robotPageMessage = { content: value, self: true };
-        setTimeout(()=>{this.props.addRobotPageMessage(robotPageMessage)},0);
-
+        } else {
+            window._SOCKET_.emit('sendMessage', { message: value })
+        }
+        let chatPageMessage = { content: value, self: true };
+        setTimeout(()=>{this.props.addChatPageMessage(chatPageMessage)},0)
+        
         this.setState({
             value: '',
         })
-
-        let parameters = {
-            text: value,
-            id: this.props.userInfo.id
-        }
-
-        sendRobotMsg(parameters).then((res) => {
-            let robotPageMessage = { content: res, self: false };
-            this.props.addRobotPageMessage(robotPageMessage)
-        })
-
     }
-
-
 
     render() {
         return (
             <div id="uesrtext">
                 <textarea
-                    placeholder="按 Enter 发送, 发送 To-Espory 触发彩蛋"
+                    placeholder="按 Enter 发送, 发送 goodbye 离开"
                     value={this.state.value}
                     onChange={this.handleTextChange}
                     onKeyPressCapture={(event) => {
                         if (event.charCode === 13 && this.state.value) {
                             this.handleEnterKey();
+
                         }
                     }}></textarea>
             </div>
@@ -142,17 +127,20 @@ export class ChatPage extends Component {
 
     }
 
+
     render() {
-        let { robotPageMessage, addRobotPageMessage, userInfo, } = this.props;
+        let { chatPageMessage, changeChatPageToMeet, addChatPageMessage, clearChatPageMessage } = this.props;
         return (
             <div className="main" >
                 <div>
                     <Message
-                        messages={robotPageMessage}
-                        icon={this.state.icon}></Message>
+                        messages={chatPageMessage}
+                        icon={this.state.icon}>
+                    </Message>
                     <Text
-                        addRobotPageMessage={addRobotPageMessage}
-                        userInfo={userInfo}>
+                        changeChatPageToMeet={changeChatPageToMeet}
+                        addChatPageMessage={addChatPageMessage}
+                    >
                     </Text>
                 </div>
 
@@ -161,17 +149,22 @@ export class ChatPage extends Component {
     }
 }
 
-
 const mapStateToProps = (state) => ({
-    userInfo: state.mainPageReducer.userInfo,
-    robotPageMessage: state.robotPageReducer.robotPageMessage,
+    chatPageMessage: state.chatPageReducer.chatPageMessage,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    addRobotPageMessage(robotPageMessage) {
+    changeChatPageToMeet(chatPageToMeet) {
         let action = {
-            type: 'ADD_ROBOTPAGE_MESSAGE',
-            robotPageMessage
+            type: 'CHANGE_CHATPAGE_TOMEET',
+            chatPageToMeet
+        }
+        dispatch(action);
+    },
+    addChatPageMessage(chatPageMessage) {
+        let action = {
+            type: 'ADD_CHATPAGE_MESSAGE',
+            chatPageMessage
         }
         dispatch(action);
     },

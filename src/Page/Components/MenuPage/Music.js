@@ -7,9 +7,9 @@ function Music(props) {
 
 
     return (
-        props.currentSessionId === 2 ?
-            <div className="main" style={style} /> : <div className="main" />
-    )
+        <div className="main" style={style} />
+        )
+
 }
 
 export default Music

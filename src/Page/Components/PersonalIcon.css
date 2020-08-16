@@ -1,6 +1,6 @@
 
 #card {
-	padding: 12px;
+    padding: 11px 11px 0px;
 }
 
 #card .avatar{
@@ -24,4 +24,8 @@
     border-radius: 4px;
     outline: none;/*鼠标点击后不会出现蓝色边框*/
   color: #FFF;
+}
+
+.card-icon{
+    padding:10px 10px 0px;
 }

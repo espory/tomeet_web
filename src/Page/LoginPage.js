@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import logo from '../images/logo.png'
 import './LoginPage.css'
-import { loginApi, sendCodeApi,registApi, } from "../service/api" // 引入接口
+import { loginApi, sendCodeApi,registApi } from "../service/api" // 引入接口
 import { withRouter } from 'react-router-dom';
-
 
 export class LoginPage extends Component {
 
@@ -80,7 +79,7 @@ export class LoginPage extends Component {
             phoneNum:this.state.loginPhoneNum,
             password:this.state.loginPassword,
         }
-        let res = loginApi(parameters);
+        loginApi(parameters);
     }
 
     sendCode(){
@@ -97,13 +96,21 @@ export class LoginPage extends Component {
 
     }
     testFunction(){
-        
+        // import io from 'socket.io-client';
+        // const socket = io('http://127.0.0.1:7001');
+        // socket.on('connect', function(){console.log('连接成功')});
+        // socket.emit('server',{name:'ybw',msg:'nihao'})
+        // socket.on('res1', function (data) {
+        //     console.log(data);
+        // })
+        // socket.emit('server',{name:'ybw1',msg:'nihao'})
+
     }
     render() {
         return (
             <div>
                 <div>
-                    <p className="tip" onClick={this.testFunction}><img className="logo" src={logo} alt="" /></p>
+                    <p className="tip" onClick={this.testFunction.bind(this)}><img className="logo" src={logo} alt="" /></p>
                     <div className= {`cont ${this.state.active}`}>
                         <div className="form sign-in">
                             <h2></h2>
